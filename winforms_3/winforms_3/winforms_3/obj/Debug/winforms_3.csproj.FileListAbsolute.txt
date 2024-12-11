@@ -1,0 +1,43 @@
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\bin\Debug\winforms_3.exe.config
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\bin\Debug\winforms_3.exe
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\bin\Debug\winforms_3.pdb
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.AssemblyReference.cache
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\obj\Debug\winforms_3.MainTable.resources
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\obj\Debug\winforms_3.Properties.Resources.resources
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.GenerateResource.cache
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.CoreCompileInputs.cache
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\obj\Debug\winforms_3.exe
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\obj\Debug\winforms_3.pdb
+C:\Users\Andrew\source\repos\winforms_3\winforms_3\obj\Debug\winforms_3.BrandTable.resources
+D:\wf\winforms_3\winforms_3\bin\Debug\winforms_3.exe.config
+D:\wf\winforms_3\winforms_3\bin\Debug\winforms_3.exe
+D:\wf\winforms_3\winforms_3\bin\Debug\winforms_3.pdb
+D:\wf\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.AssemblyReference.cache
+D:\wf\winforms_3\winforms_3\obj\Debug\winforms_3.BrandTable.resources
+D:\wf\winforms_3\winforms_3\obj\Debug\winforms_3.MainTable.resources
+D:\wf\winforms_3\winforms_3\obj\Debug\winforms_3.Properties.Resources.resources
+D:\wf\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.GenerateResource.cache
+D:\wf\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.CoreCompileInputs.cache
+D:\wf\winforms_3\winforms_3\obj\Debug\winforms_3.exe
+D:\wf\winforms_3\winforms_3\obj\Debug\winforms_3.pdb
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\bin\Debug\winforms_3.exe.config
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\obj\Debug\winforms_3.exe
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\obj\Debug\winforms_3.pdb
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\bin\Debug\winforms_3.exe
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\bin\Debug\winforms_3.pdb
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\obj\Debug\winforms_3.csprojResolveAssemblyReference.cache
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\obj\Debug\winforms_3.BrandTable.resources
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\obj\Debug\winforms_3.MainTable.resources
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\obj\Debug\winforms_3.Properties.Resources.resources
+C:\Users\student\Desktop\wf\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.GenerateResource.Cache
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\bin\Debug\winforms_3.exe.config
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\bin\Debug\winforms_3.exe
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\bin\Debug\winforms_3.pdb
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.AssemblyReference.cache
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\obj\Debug\winforms_3.BrandTable.resources
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\obj\Debug\winforms_3.MainTable.resources
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\obj\Debug\winforms_3.Properties.Resources.resources
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.GenerateResource.cache
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\obj\Debug\winforms_3.csproj.CoreCompileInputs.cache
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\obj\Debug\winforms_3.exe
+C:\Users\Andrew\Desktop\флешка\wf 2\wf\winforms_3\winforms_3\obj\Debug\winforms_3.pdb

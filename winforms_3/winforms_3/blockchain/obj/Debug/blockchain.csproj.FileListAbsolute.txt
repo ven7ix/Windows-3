@@ -1,0 +1,7 @@
+C:\Users\Andrew\source\repos\winforms_3\blockchain\bin\Debug\blockchain.exe.config
+C:\Users\Andrew\source\repos\winforms_3\blockchain\bin\Debug\blockchain.exe
+C:\Users\Andrew\source\repos\winforms_3\blockchain\bin\Debug\blockchain.pdb
+C:\Users\Andrew\source\repos\winforms_3\blockchain\obj\Debug\blockchain.csproj.AssemblyReference.cache
+C:\Users\Andrew\source\repos\winforms_3\blockchain\obj\Debug\blockchain.csproj.CoreCompileInputs.cache
+C:\Users\Andrew\source\repos\winforms_3\blockchain\obj\Debug\blockchain.exe
+C:\Users\Andrew\source\repos\winforms_3\blockchain\obj\Debug\blockchain.pdb
