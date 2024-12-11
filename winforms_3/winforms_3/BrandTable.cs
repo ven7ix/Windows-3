@@ -62,16 +62,68 @@ namespace winforms_3
         //
         private void DataGridViewTruck_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            int selectedCar = e.RowIndex;
-            DataGridViewRow row = dataGridViewTruck.Rows[selectedCar];
+            int selectedTruckInTable = e.RowIndex;
+            DataGridViewRow row = dataGridViewTruck.Rows[selectedTruckInTable];
 
-            Loader.carBrandDictionaryList[carBrand][selectedCar].m_brand = row.Cells[0].Value.ToString();
-            Loader.carBrandDictionaryList[carBrand][selectedCar].m_model = row.Cells[1].Value.ToString();
-            Loader.carBrandDictionaryList[carBrand][selectedCar].m_power = int.Parse(row.Cells[2].Value.ToString());
-            Loader.carBrandDictionaryList[carBrand][selectedCar].m_maxSpeed = int.Parse(row.Cells[3].Value.ToString());
-            Loader.carBrandDictionaryList[carBrand][selectedCar].m_licencePlate = row.Cells[4].Value.ToString();
+            int selectedTruckInList = 0;
+            int howManyTrucksISaw = 0;
 
-            Loader.brandDictionaryBlockchain[carBrand][selectedCar] = new Block(Block.ConvertCarToString(Loader.carBrandDictionaryList[carBrand][selectedCar]));
+            for (int i = 0; i < Loader.carBrandDictionaryList[carBrand].Count; i++)
+            {
+                ICar car = Loader.carBrandDictionaryList[carBrand][i];
+
+                if (car is Truck)
+                {
+                    if (howManyTrucksISaw == selectedTruckInTable)
+                    {
+                        selectedTruckInList = i;
+                        break;
+                    }
+                    howManyTrucksISaw++;
+                }
+            }
+
+            Loader.carBrandDictionaryList[carBrand][selectedTruckInList].m_model = row.Cells[1].Value.ToString();
+            Loader.carBrandDictionaryList[carBrand][selectedTruckInList].m_power = int.Parse(row.Cells[2].Value.ToString());
+            Loader.carBrandDictionaryList[carBrand][selectedTruckInList].m_maxSpeed = int.Parse(row.Cells[3].Value.ToString());
+            Loader.carBrandDictionaryList[carBrand][selectedTruckInList].m_licencePlate = row.Cells[4].Value.ToString();
+
+
+            Block blockTruckCar = new Block(Block.ConvertCarToString(Loader.carBrandDictionaryList[carBrand][selectedTruckInList]));
+            Loader.brandDictionaryBlockchain[carBrand][selectedTruckInList] = Block.AddBlockToMiddle(blockTruckCar, Loader.brandDictionaryBlockchain[carBrand], selectedTruckInList);
+        }
+
+        private void DataGridViewPassenger_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            int selectedPassengerInTable = e.RowIndex;
+            DataGridViewRow row = dataGridViewPassenger.Rows[selectedPassengerInTable];
+
+            int selectedPassengerInList = 0;
+            int howManyPassengersISaw = 0;
+
+            for (int i = 0; i < Loader.carBrandDictionaryList[carBrand].Count; i++)
+            {
+                ICar car = Loader.carBrandDictionaryList[carBrand][i];
+
+                if (car is PassengerCar)
+                {
+                    if (howManyPassengersISaw == selectedPassengerInTable)
+                    {
+                        selectedPassengerInList = i;
+                        break;
+                    }
+                    howManyPassengersISaw++;
+                }
+            }
+
+            Loader.carBrandDictionaryList[carBrand][selectedPassengerInList].m_model = row.Cells[1].Value.ToString();
+            Loader.carBrandDictionaryList[carBrand][selectedPassengerInList].m_power = int.Parse(row.Cells[2].Value.ToString());
+            Loader.carBrandDictionaryList[carBrand][selectedPassengerInList].m_maxSpeed = int.Parse(row.Cells[3].Value.ToString());
+            Loader.carBrandDictionaryList[carBrand][selectedPassengerInList].m_licencePlate = row.Cells[4].Value.ToString();
+
+
+            Block blockPassengerCar = new Block(Block.ConvertCarToString(Loader.carBrandDictionaryList[carBrand][selectedPassengerInList]));
+            Loader.brandDictionaryBlockchain[carBrand][selectedPassengerInList] = Block.AddBlockToMiddle(blockPassengerCar, Loader.brandDictionaryBlockchain[carBrand], selectedPassengerInList);
         }
 
 

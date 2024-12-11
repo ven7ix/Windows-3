@@ -32,7 +32,20 @@ namespace winforms_3
             if (blockchain.Count == 0)
                 return message;
 
-            Block hashed = new Block(GetHash(blockchain[blockchain.Count - 1].hashCode.ToString()) + SEP + message.hashCode);
+            Block hashed = new Block(GetHash(blockchain[blockchain.Count - 1].hashCode) + SEP + message.hashCode);
+
+            return hashed;
+        }
+
+        static public Block AddBlockToMiddle(Block message, List<Block> blockchain, int position)
+        {
+            if (blockchain.Count == 0)
+                return message;
+
+            if (position <= 0)
+                return message;
+
+            Block hashed = new Block(GetHash(blockchain[position - 1].hashCode) + SEP + message.hashCode);
 
             return hashed;
         }
