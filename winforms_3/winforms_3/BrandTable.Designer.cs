@@ -47,12 +47,16 @@
             this.airbags = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timerLoad = new System.Windows.Forms.Timer(this.components);
             this.progressBarLoad = new System.Windows.Forms.ProgressBar();
+            this.buttonPing = new System.Windows.Forms.Button();
+            this.buttonLoad = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTruck)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPassenger)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewTruck
             // 
+            this.dataGridViewTruck.AllowUserToAddRows = false;
+            this.dataGridViewTruck.AllowUserToDeleteRows = false;
             this.dataGridViewTruck.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTruck.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.brandTruck,
@@ -66,6 +70,7 @@
             this.dataGridViewTruck.Name = "dataGridViewTruck";
             this.dataGridViewTruck.Size = new System.Drawing.Size(775, 151);
             this.dataGridViewTruck.TabIndex = 0;
+            this.dataGridViewTruck.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewTruck_CellEndEdit);
             // 
             // brandTruck
             // 
@@ -104,6 +109,8 @@
             // 
             // dataGridViewPassenger
             // 
+            this.dataGridViewPassenger.AllowUserToAddRows = false;
+            this.dataGridViewPassenger.AllowUserToDeleteRows = false;
             this.dataGridViewPassenger.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewPassenger.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.brand,
@@ -117,6 +124,7 @@
             this.dataGridViewPassenger.Name = "dataGridViewPassenger";
             this.dataGridViewPassenger.Size = new System.Drawing.Size(775, 150);
             this.dataGridViewPassenger.TabIndex = 1;
+            this.dataGridViewPassenger.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewPassenger_CellEndEdit);
             // 
             // brand
             // 
@@ -164,11 +172,33 @@
             this.progressBarLoad.Size = new System.Drawing.Size(798, 61);
             this.progressBarLoad.TabIndex = 2;
             // 
+            // buttonPing
+            // 
+            this.buttonPing.Location = new System.Drawing.Point(563, 469);
+            this.buttonPing.Name = "buttonPing";
+            this.buttonPing.Size = new System.Drawing.Size(109, 21);
+            this.buttonPing.TabIndex = 7;
+            this.buttonPing.Text = "Ping";
+            this.buttonPing.UseVisualStyleBackColor = true;
+            this.buttonPing.Click += new System.EventHandler(this.ButtonPing_Click);
+            // 
+            // buttonLoad
+            // 
+            this.buttonLoad.Location = new System.Drawing.Point(679, 469);
+            this.buttonLoad.Name = "buttonLoad";
+            this.buttonLoad.Size = new System.Drawing.Size(109, 21);
+            this.buttonLoad.TabIndex = 8;
+            this.buttonLoad.Text = "Load";
+            this.buttonLoad.UseVisualStyleBackColor = true;
+            this.buttonLoad.Click += new System.EventHandler(this.ButtonLoad_Click);
+            // 
             // BrandTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 502);
+            this.Controls.Add(this.buttonLoad);
+            this.Controls.Add(this.buttonPing);
             this.Controls.Add(this.progressBarLoad);
             this.Controls.Add(this.dataGridViewPassenger);
             this.Controls.Add(this.dataGridViewTruck);
@@ -200,5 +230,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn multimedia;
         private System.Windows.Forms.DataGridViewTextBoxColumn airbags;
         private System.Windows.Forms.ProgressBar progressBarLoad;
+        private System.Windows.Forms.Button buttonPing;
+        private System.Windows.Forms.Button buttonLoad;
     }
 }

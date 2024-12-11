@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Windows.Forms;
 
 namespace winforms_3
@@ -8,14 +11,23 @@ namespace winforms_3
     {
         private readonly string carBrand;
 
-        public BrandTable(string brand)
+        private readonly int ApplicationNumber;
+        private readonly int port;
+        private readonly MyTcpConnector connector;
+
+        public BrandTable(int ApplicationNumber, string brand)
         {
+            this.ApplicationNumber = ApplicationNumber;
+            port = 13000 + ApplicationNumber;
+            connector = new MyTcpConnector(port, LoaderEcho);
+
             InitializeComponent();
+            Text = $"BrandTable {ApplicationNumber}";
 
             carBrand = brand;
 
-            Loader.LoadStart(carBrand);
-            timerLoad.Enabled = true;
+            if (Loader.carBrandDictionaryList.ContainsKey(carBrand))
+                RenderRows(Loader.carBrandDictionaryList[carBrand]);
         }
 
         private void RenderRows(List<ICar> cars)
@@ -42,6 +54,207 @@ namespace winforms_3
                 timerLoad.Enabled = false;
                 progressBarLoad.Value = 0;
             }
+        }
+
+
+        //
+        // Blockchain
+        //
+        private void DataGridViewTruck_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            int selectedCar = e.RowIndex;
+            DataGridViewRow row = dataGridViewTruck.Rows[selectedCar];
+
+            Loader.carBrandDictionaryList[carBrand][selectedCar].m_brand = row.Cells[0].Value.ToString();
+            Loader.carBrandDictionaryList[carBrand][selectedCar].m_model = row.Cells[1].Value.ToString();
+            Loader.carBrandDictionaryList[carBrand][selectedCar].m_power = int.Parse(row.Cells[2].Value.ToString());
+            Loader.carBrandDictionaryList[carBrand][selectedCar].m_maxSpeed = int.Parse(row.Cells[3].Value.ToString());
+            Loader.carBrandDictionaryList[carBrand][selectedCar].m_licencePlate = row.Cells[4].Value.ToString();
+
+            Loader.brandDictionaryBlockchain[carBrand][selectedCar] = new Block(Block.ConvertCarToString(Loader.carBrandDictionaryList[carBrand][selectedCar]));
+        }
+
+
+        //
+        // P2P Buttons
+        //
+        private void ButtonLoad_Click(object sender, EventArgs e)
+        {
+            Loader.LoadStart(carBrand);
+            timerLoad.Enabled = true;
+        }
+
+        private void ButtonPing_Click(object sender, EventArgs e)
+        {
+            if (!Loader.carBrandDictionaryList.ContainsKey(carBrand))
+            {
+                for (int i = 0; i < 5; i++)
+                    SendMessageTo(i, $"GIVE_ME_CARS<BR>{carBrand}");
+            }
+
+            if (Loader.carBrandDictionaryList.ContainsKey(carBrand))
+                RenderRows(Loader.carBrandDictionaryList[carBrand]);
+        }
+
+
+        //
+        // Data exchange
+        //
+        private string SendTableData(string brand)
+        {
+            List<ICar> generatedCars = new List<ICar>();
+            if (Loader.carBrandDictionaryList.ContainsKey(brand))
+                generatedCars = Loader.carBrandDictionaryList[brand];
+
+            string BrandTalbeData = $"{brand}<BR>";
+
+            for (int i = 0; i < generatedCars.Count; i++)
+            {
+                ICar car = generatedCars[i];
+
+                if (car is Truck)
+                {
+                    BrandTalbeData += $"{(car as Truck).m_brand}<SEP>";
+                    BrandTalbeData += $"{(car as Truck).m_model}<SEP>";
+                    BrandTalbeData += $"{(car as Truck).m_power}<SEP>";
+                    BrandTalbeData += $"{(car as Truck).m_maxSpeed}<SEP>";
+                    BrandTalbeData += $"{(car as Truck).m_type}<SEP>";
+                    BrandTalbeData += $"{(car as Truck).m_licencePlate}<SEP>";
+                    BrandTalbeData += $"{(car as Truck).m_wheels}<SEP>";
+                    BrandTalbeData += $"{(car as Truck).m_trunkVolume}";
+                }
+                else if (car is PassengerCar)
+                {
+                    BrandTalbeData += $"{(car as PassengerCar).m_brand}<SEP>";
+                    BrandTalbeData += $"{(car as PassengerCar).m_model}<SEP>";
+                    BrandTalbeData += $"{(car as PassengerCar).m_power}<SEP>";
+                    BrandTalbeData += $"{(car as PassengerCar).m_maxSpeed}<SEP>";
+                    BrandTalbeData += $"{(car as PassengerCar).m_type}<SEP>";
+                    BrandTalbeData += $"{(car as PassengerCar).m_licencePlate}<SEP>";
+                    BrandTalbeData += $"{(car as PassengerCar).m_multimedia}<SEP>";
+                    BrandTalbeData += $"{(car as PassengerCar).m_airbags}";
+                }
+
+                if (i < generatedCars.Count - 1)
+                    BrandTalbeData += "<BR>";
+            }
+
+            return BrandTalbeData;
+        }
+
+        private void ReceiveTableData(string BrandTalbeData)
+        {
+            Regex regBR = new Regex("<BR>");
+            Regex regSEP = new Regex("<SEP>");
+
+            if (!(regBR.IsMatch(BrandTalbeData) || regSEP.IsMatch(BrandTalbeData)))
+                return;
+
+            string[] carsData = regBR.Split(BrandTalbeData);
+            string brand = carsData[1];
+
+            if (!Loader.carBrandDictionaryList.ContainsKey(brand))
+                Loader.carBrandDictionaryList.Add(brand, new List<ICar>());
+
+            for (int i = 2; i < carsData.Count(); i++)
+            {
+                string[] carData = regSEP.Split(carsData[i]);
+
+                ICar car = null;
+
+                if (carData[4] == "Truck")
+                    car = new Truck()
+                    {
+                        m_brand = carData[0],
+                        m_model = carData[1],
+                        m_power = int.Parse(carData[2]),
+                        m_maxSpeed = int.Parse(carData[3]),
+                        m_type = carData[4],
+                        m_licencePlate = carData[5],
+                        m_wheels = int.Parse(carData[6]),
+                        m_trunkVolume = int.Parse(carData[7])
+                    };
+                else if (carData[4] == "PassengerCar")
+                    car = new PassengerCar()
+                    {
+                        m_brand = carData[0],
+                        m_model = carData[1],
+                        m_power = int.Parse(carData[2]),
+                        m_maxSpeed = int.Parse(carData[3]),
+                        m_type = carData[4],
+                        m_licencePlate = carData[5],
+                        m_multimedia = carData[6],
+                        m_airbags = int.Parse(carData[7])
+                    };
+
+                if (CheckCarForCopy(car, brand))
+                    continue;
+
+                Loader.carBrandDictionaryList[brand].Add(car);
+            }
+
+            // Blockchain
+            if (!Loader.brandDictionaryBlockchain.ContainsKey(brand))
+                Loader.brandDictionaryBlockchain.Add(brand, new List<Block>());
+            Loader.brandDictionaryBlockchain[brand] = Block.ConvertListToBlockchain(Loader.carBrandDictionaryList[brand]);
+        }
+
+        private bool CheckCarForCopy(ICar carChecking, string brand)
+        {
+            foreach (ICar car in Loader.carBrandDictionaryList[brand])
+            {
+                if (car is Truck && carChecking is Truck)
+                {
+                    if ((car as Truck) == (carChecking as Truck))
+                        return true;
+                }
+                else if (car is PassengerCar && carChecking is PassengerCar)
+                {
+                    if ((car as PassengerCar) == (carChecking as PassengerCar))
+                        return true;
+                }
+            }
+            return false;
+        }
+
+
+        //
+        // P2P
+        //
+        private void LoaderEcho(string message)
+        {
+            object locker = new object();
+            lock (locker)
+            {
+                Regex regBR = new Regex("<BR>");
+
+                if (regBR.Split(message)[1] == "GIVE_ME_CARS")
+                {
+                    string brand = regBR.Split(message)[2];
+
+                    if (!Loader.carBrandDictionaryList.ContainsKey(brand))
+                        return;
+
+                    if (!Block.CheckBlockchain(Loader.brandDictionaryBlockchain[brand]))
+                    {
+                        MessageBox.Show("Blockchain Error");
+                        return;
+                    }
+
+                    SendMessageTo(int.Parse(regBR.Split(message)[0]) - 13000, $"{SendTableData(brand)}");
+                    return;
+                }
+
+                ReceiveTableData(message);
+            }
+        }
+
+        private void SendMessageTo(int application, string message)
+        {
+            if (application == ApplicationNumber)
+                return;
+
+            connector.Send("127.0.0.1", 13000 + application, $"{port}<BR>{message}");
         }
     }
 }

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -12,9 +15,14 @@ namespace winforms_3
     public partial class MainTable : Form
     {
         private readonly List<ICar> cars = new List<ICar>();
-        public MainTable()
+
+        private int ApplicationNumber;
+
+        public MainTable(int ApplicationNumber)
         {
             InitializeComponent();
+            this.ApplicationNumber = ApplicationNumber;
+            Text = $"MainTable {ApplicationNumber}";
 
             //заполнение
             {
@@ -36,11 +44,26 @@ namespace winforms_3
             }
         }
 
-        private void MainTable_Load(object sender, EventArgs e)
+
+        //
+        //Open BrandTable
+        //
+        private void DataGridViewMainTable_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            UpdateMainTable();
+            int selected = e.RowIndex;
+            if (selected == -1)
+                return;
+
+            string selectedBrand = dataGridViewMainTable.Rows[selected].Tag.ToString();
+
+            BrandTable brandTable = new BrandTable(ApplicationNumber, selectedBrand);
+            brandTable.Show();
         }
 
+
+        //
+        //Update table
+        //
         private void UpdateMainTable()
         {
             dataGridViewMainTable.CurrentCell = null;
@@ -62,6 +85,17 @@ namespace winforms_3
             }
         }
 
+        private void UpdateTags()
+        {
+            for (int i = 0; i < dataGridViewMainTable.Rows.Count; i++)
+                dataGridViewMainTable.Rows[i].Tag = cars[i].m_brand;
+        }
+
+        private void MainTable_Load(object sender, EventArgs e)
+        {
+            UpdateMainTable();
+        }
+
         private void DataGridViewMainTable_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             int selected = e.RowIndex;
@@ -71,24 +105,10 @@ namespace winforms_3
             UpdateMainTable();
         }
 
-        private void UpdateTags()
-        {
-            for (int i = 0; i < dataGridViewMainTable.Rows.Count; i++)
-                dataGridViewMainTable.Rows[i].Tag = cars[i].m_brand;
-        }
 
-        private void DataGridViewMainTable_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            int selected = e.RowIndex;
-            if (selected == -1)
-                return;
-
-            string selectedBrand = dataGridViewMainTable.Rows[selected].Tag.ToString();
-
-            BrandTable brandTable = new BrandTable(selectedBrand);
-            brandTable.Show();
-        }
-
+        //
+        //XML
+        //
         private void SaveListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XMLCar car = new XMLCar();

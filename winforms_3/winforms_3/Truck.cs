@@ -14,6 +14,22 @@ namespace winforms_3
         public int m_wheels { get; set; }
         public int m_trunkVolume { get; set; }
 
+        public static bool operator ==(Truck a, Truck b)
+        {
+            if (a.m_brand == b.m_brand && a.m_model == b.m_model && a.m_power == b.m_power && a.m_maxSpeed == b.m_maxSpeed && a.m_licencePlate == b.m_licencePlate && a.m_wheels == b.m_wheels && a.m_trunkVolume == b.m_trunkVolume)
+                return true;
+
+            return false;
+        }
+
+        public static bool operator !=(Truck a, Truck b)
+        {
+            if (!(a == b))
+                return true;
+
+            return false;
+        }
+
         public Truck(string brand, string model, int power, int maxSpeed, string licencePlate)
         {
             m_brand = brand;

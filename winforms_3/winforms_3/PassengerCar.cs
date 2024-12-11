@@ -14,6 +14,22 @@ namespace winforms_3
         public string m_multimedia { get; set; }
         public int m_airbags { get; set; }
 
+        public static bool operator ==(PassengerCar a, PassengerCar b)
+        {
+            if (a.m_brand == b.m_brand && a.m_model == b.m_model && a.m_power == b.m_power && a.m_maxSpeed == b.m_maxSpeed && a.m_licencePlate == b.m_licencePlate && a.m_multimedia == b.m_multimedia && a.m_airbags == b.m_airbags)
+                return true;
+
+            return false;
+        }
+
+        public static bool operator !=(PassengerCar a, PassengerCar b)
+        {
+            if (!(a == b))
+                return true;
+
+            return false;
+        }
+
         public PassengerCar(string brand, string model, int power, int maxSpeed, string licencePlate)
         {
             m_brand = brand;

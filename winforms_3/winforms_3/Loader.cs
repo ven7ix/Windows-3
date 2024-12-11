@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Net.Configuration;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace winforms_3
 {
     internal class Loader
     {
+        public static Dictionary<string, List<Block>> brandDictionaryBlockchain = new Dictionary<string, List<Block>>();
+
         private static int progress = 0;
         private static bool isFinished = true;
         private static readonly Random random = new Random();
-        private static readonly Dictionary<string, List<ICar>> carBrandDictionaryList = new Dictionary<string, List<ICar>>();
+        public static Dictionary<string, List<ICar>> carBrandDictionaryList = new Dictionary<string, List<ICar>>();
 
         public static async Task LoadStart(string brand)
         {
@@ -27,6 +35,7 @@ namespace winforms_3
                 progress = (i + 1) * 100 / recordAmount;
 
                 ICar car = GenerateCar(brand);
+                AddCarToBlockchain(brand, car);
                 carsWithSameBrand.Add(car);
                 carBrandDictionaryList[brand] = carsWithSameBrand;
 
@@ -57,6 +66,18 @@ namespace winforms_3
             return car;
         }
 
+        private static void AddCarToBlockchain(string brand, ICar car)
+        {
+            if (!brandDictionaryBlockchain.ContainsKey(brand))
+                brandDictionaryBlockchain.Add(brand, new List<Block>());
+
+            Block carBlock = new Block(Block.ConvertCarToString(car));
+            brandDictionaryBlockchain[brand].Add(Block.AddBlock(carBlock, brandDictionaryBlockchain[brand]));
+        }
+
+        //
+        //Get info
+        //
         public static List<ICar> GetData(string brand)
         {
             return carBrandDictionaryList[brand];
